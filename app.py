@@ -12,10 +12,6 @@ sortablejs = Script(src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/
 app = FastHTML(hdrs=(picolink, sortablejs), static_dir='static')
 
 
-@app.get("/static/{fname}")
-def static(fname: str):
-    return FileResponse(f'static/{fname}')
-
 def create_repo_card(repo):
     img_element = Img(src=f"/static/{repo['preview']}", alt=f"{repo['name']} image", style="margin-top: 12px;") if 'preview' in repo else None
 
@@ -87,6 +83,16 @@ def home():
         """),
         style="max-width: 800px; margin: 0 auto;"
     )
+
+
+@app.get("/static/{fname}")
+def static(fname: str):
+    return FileResponse(f'static/{fname}')
+
+
+@app.get("/favicon.ico")
+def favicon():
+    return FileResponse('static/favicon.ico')
 
 
 if __name__ == '__main__':
